@@ -3,7 +3,9 @@ import random
 import google.generativeai as genai
 from dotenv import load_dotenv
 import os
-
+from PIL import Image
+import datetime
+import json
 # Load environment variables
 load_dotenv()
 
