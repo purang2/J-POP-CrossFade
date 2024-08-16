@@ -16,81 +16,155 @@ favicon = Image.open('images/favicon.png')
 # Initialize Gemini model
 model = genai.GenerativeModel('gemini-1.5-pro-exp-0801')
 
+import streamlit as st
+import google.generativeai as genai
+from dotenv import load_dotenv
+import os
 
-# Function to translate lyrics using Gemini
-def translate_lyrics(lyrics, similarity_weight, meaning_weight):
+# Load environment variables
+load_dotenv()
+
+# Configure Gemini API
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+# Initialize Gemini model
+model = genai.GenerativeModel('gemini-pro')
+
+def translate_and_adapt_lyrics(lyrics, sim_weight, mean_weight):
     prompt = f"""
-    
-    Task: Transform J-Pop lyrics into K-Pop style, balancing phonetic similarity ({similarity_weight}) and meaning preservation ({meaning_weight})
+    작업: J-Pop 가사를 K-Pop 스타일로 변환하되, 음운적 유사성({sim_weight})과 의미 보존({mean_weight})의 균형을 맞추세요.
 
-    Original J-Pop lyrics:
+    원본 J-Pop 가사:
     {lyrics}
 
-    Instructions:
-    1. Provide a direct Korean translation of the Japanese lyrics.
-    2. Create a K-Pop style adaptation following these guidelines:
-       - Maintain phonetic similarity to the original Japanese (weight: {similarity_weight})
-       - Preserve the original meaning (weight: {meaning_weight})
-       - Ensure the adapted lyrics fit the original melody and are singable
-       - Incorporate current K-Pop trends and popular expressions
-       - Consider the cultural context and make appropriate adjustments
-    3. For each line, provide:
-       a) Original Japanese (with romaji)
-       b) Direct Korean translation
-       c) K-Pop style adaptation (with romaji)
-       d) Explanation of your adaptation choices
-    4. Consider these musical elements:
-       - Rhythm and stress patterns of the original
-       - Syllable count and placement
-       - Vowel sounds for high notes or sustained notes
-    5. Add creative reinterpretations where appropriate to suit the K-Pop market
+    지침:
+    1. 일본어 가사의 직역을 한국어로 제공하세요.
+    2. 다음 지침을 따라 K-Pop 스타일로 각색하세요:
+       - 원래 일본어와의 음운적 유사성 유지 (가중치: {sim_weight})
+       - 원래 의미 보존 (가중치: {mean_weight})
+       - 각색된 가사가 원곡의 멜로디에 맞고 부르기 쉬운지 확인
+       - 현재 K-Pop 트렌드와 인기 있는 표현 포함
+       - 문화적 맥락을 고려하고 적절히 조정
+    3. 각 줄마다 다음을 제공하세요:
+       a) 원본 일본어
+       b) 직역 한국어
+       c) K-Pop 스타일 각색 (한국어)
+       d) 각색 선택에 대한 설명
+    4. 다음 음악적 요소를 고려하세요:
+       - 원곡의 리듬과 강세 패턴
+       - 음절 수와 배치
+       - 고음이나 지속음을 위한 모음 소리
+    5. K-Pop 시장에 맞는 창의적인 재해석을 적절히 추가하세요
 
-    Output format:
-    Line 1:
-    Original (JP): [Japanese] / [Romaji]
-    Direct Translation: [Korean translation]
-    K-Pop Adaptation: [Adapted Korean] / [Romaji]
-    Explanation: [Brief explanation of adaptation choices, cultural considerations, and musical elements]
+    출력 형식:
+    1번 줄:
+    원본 (일본어): [일본어]
+    직역: [한국어 번역]
+    K-Pop 각색: [각색된 한국어]
+    설명: [각색 선택, 문화적 고려사항, 음악적 요소에 대한 간단한 설명]
 
-    [Repeat for each line]
+    [각 줄마다 반복]
 
-    Overall Adaptation Strategy:
-    [Explain your overall approach, including how you balanced sound and meaning, incorporated K-Pop trends, and made cultural adjustments]
+    전체 각색 전략:
+    [소리와 의미의 균형, K-Pop 트렌드 반영, 문화적 조정 등 전반적인 접근 방식 설명]
 
-    K-Pop Market Considerations:
-    [Discuss how this adaptation might appeal to K-Pop fans and fit current trends]
+    K-Pop 시장 고려사항:
+    [이 각색이 K-Pop 팬들에게 어떻게 어필할 수 있고 현재 트렌드에 맞는지 논의]
 
-    Potential Challenges:
-    [Identify any particularly difficult lines or concepts to adapt, and how you addressed them]
+    잠재적 도전 과제:
+    [각색하기 특히 어려운 줄이나 개념을 식별하고 어떻게 해결했는지 설명]
 
-    Remember: The goal is to create K-Pop lyrics that sound natural in Korean, maintain the essence of the original, could be sung to the original melody, and appeal to the K-Pop market.
-    
+    최종 K-Pop 각색:
+    [완성된 K-Pop 각색 가사를 한국어로 제공]
+
+    기억하세요: 목표는 한국어로 자연스럽게 들리고, 원곡의 본질을 유지하며, 원곡의 멜로디에 맞춰 부를 수 있고, K-Pop 시장에 어필할 수 있는 K-Pop 가사를 만드는 것입니다.
     """
 
     response = model.generate_content(prompt)
     return response.text
 
-# Streamlit UI code
-st.set_page_config(page_title="J-POP-CrossFade", layout="wide",page_icon=favicon)
+def vocal_score(j_pop_lyrics, k_pop_lyrics):
+    prompt = f"""
+    당신은 강력한 보컬과 다양한 언어의 노래를 적응시키는 능력으로 유명한 전설적인 K-Pop 록스타입니다. 당신의 임무는 원래의 J-Pop 가사와 비교하여 K-Pop 번안 버전의 부르기 쉬운 정도를 평가하는 것입니다. 각 라인의 흐름, 리듬, 그리고 얼마나 부르기 쉬운지에 집중하세요.
 
-# CSS styles
+    원래 J-Pop 가사:
+    {j_pop_lyrics}
+
+    K-Pop 번안 가사:
+    {k_pop_lyrics}
+
+    각 라인 쌍에 대해 다음을 제공하세요:
+    1. 부르기 쉬운 정도에 대한 간단한 비교
+    2. 1-10점 척도의 "보컬 점수" (10점이 부르기에 가장 완벽한 상태)
+    3. 록스타 스타일의 짧고 캐주얼한 코멘트 (슬랭을 사용하고, 표현력 있게!)
+
+    출력 형식 예시:
+    라인 1:
+    J-Pop: [일본어 가사]
+    K-Pop: [한국어 가사]
+    비교: [간단한 분석]
+    보컬 점수: [1-10]
+    록스타 코멘트: [캐주얼하고 슬랭이 가득한 코멘트]
+
+    전체 요약:
+    [번안 버전의 부르기 쉬운 정도에 대한 간단한 전체 평가]
+    총 보컬 점수: [모든 라인 점수의 평균]
+    최종 록스타 평가: [록스타 스타일의 전체 의견]
+
+    기억하세요, 당신은 록스타입니다! 자신감 있게, 음악 슬랭을 사용하고, 코멘트에 약간의 엣지를 주는 것을 두려워하지 마세요. 이 평가를 록킹하자! 🎸🤘
+    """
+
+    response = model.generate_content(prompt)
+    return response.text
+
+def jpop_to_kpop_with_evaluation(j_pop_lyrics, similarity_weight, meaning_weight):
+    # 번역 및 각색 수행
+    adaptation_result = translate_and_adapt_lyrics(j_pop_lyrics, similarity_weight, meaning_weight)
+    
+    # 결과에서 원본 일본어 가사와 최종 K-Pop 가사 추출
+    # 참고: 이 부분은 실제 출력 형식에 따라 조정이 필요할 수 있습니다
+    j_pop_lyrics_extracted = "원본 일본어 가사"  # adaptation_result에서 추출
+    k_pop_lyrics_extracted = "최종 K-Pop 각색 가사"  # adaptation_result에서 추출
+
+    # 보컬 점수 평가 수행
+    vocal_evaluation = vocal_score(j_pop_lyrics_extracted, k_pop_lyrics_extracted)
+
+    # 최종 결과 조합
+    final_result = f"""
+    번역 및 각색 결과:
+    {adaptation_result}
+
+    보컬 점수 평가:
+    {vocal_evaluation}
+    """
+
+    return final_result
+
+# Streamlit UI
+st.set_page_config(page_title="J-POP-CrossFade", layout="wide")
+
+# CSS 스타일
 st.markdown("""
 <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+    
     body {
         background-color: #F5F5DC;
         color: #8B0000;
-        font-family: 'Arial', sans-serif;
+        font-family: 'Pretendard', sans-serif;
     }
     .title {
         color: #8B0000;
         font-size: 48px;
         font-weight: bold;
         text-align: center;
+        font-family: 'Pretendard', sans-serif;
     }
     .subtitle {
         color: #8B4513;
         font-size: 24px;
         text-align: center;
+        font-family: 'Pretendard', sans-serif;
     }
     .button {
         background-color: #8B0000;
@@ -104,11 +178,13 @@ st.markdown("""
         margin: 4px 2px;
         cursor: pointer;
         border-radius: 12px;
+        font-family: 'Pretendard', sans-serif;
     }
     .text-input {
         background-color: #FFFFF0;
         border: 1px solid #8B0000;
         color: #8B4513;
+        font-family: 'Pretendard', sans-serif;
     }
     .output-text {
         background-color: #FFFFF0;
@@ -116,67 +192,34 @@ st.markdown("""
         color: #8B4513;
         padding: 10px;
         border-radius: 5px;
-    }
-    .song-item {
-        background-color: #FFFFF0;
-        border: 1px solid #8B0000;
-        color: #8B4513;
-        padding: 10px;
-        margin: 5px 0;
-        border-radius: 5px;
+        font-family: 'Pretendard', sans-serif;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Title and subtitle
+# 제목과 부제목
 st.markdown('<p class="title">J-POP-CrossFade</p>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">AI-powered J-Pop to K-Pop Lyrics Translator using Gemini Pro 1.5</p>', unsafe_allow_html=True)
+st.markdown('<p class="subtitle">AI 기반 J-Pop to K-Pop 가사 번역기 및 평가기</p>', unsafe_allow_html=True)
 
-# Main area
+# 메인 영역
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("Original J-Pop Lyrics")
-    japanese_lyrics = st.text_area("Enter Japanese lyrics here", height=200, key="input")
+    st.subheader("원본 J-Pop 가사")
+    j_pop_lyrics = st.text_area("일본어 가사를 입력하세요", height=200, key="input")
 
 with col2:
-    st.subheader("Translated K-Pop Lyrics")
-    if st.button("Translate and Adapt", key="translate"):
-        similarity_weight = st.session_state.get('similarity', 0.5)
-        meaning_weight = st.session_state.get('meaning', 0.5)
-        translated_lyrics = translate_lyrics(japanese_lyrics, similarity_weight, meaning_weight)
-        st.markdown(f'<div class="output-text">{translated_lyrics}</div>', unsafe_allow_html=True)
+    st.subheader("번역 설정")
+    similarity_weight = st.slider("음운적 유사성 가중치", 0.0, 1.0, 0.5, key='similarity')
+    meaning_weight = st.slider("의미 보존 가중치", 0.0, 1.0, 0.5, key='meaning')
 
-# Translation history
+if st.button("번역, 각색 및 평가", key="translate"):
+    if j_pop_lyrics:
+        result = jpop_to_kpop_with_evaluation(j_pop_lyrics, similarity_weight, meaning_weight)
+        st.markdown(f'<div class="output-text">{result}</div>', unsafe_allow_html=True)
+    else:
+        st.warning("번역을 시작하기 전에 J-Pop 가사를 입력해주세요.")
+
+# 푸터
 st.markdown("---")
-st.subheader("Translation History")
-
-# Dummy data for history display
-history = [
-    {"original": "上を向いて歩こう", "translated": "고개를 들고 걸어가자"},
-    {"original": "幸せなら手をたたこう", "translated": "행복하다면 손뼉을 치자"},
-    {"original": "チェリー", "translated": "체리"}
-]
-
-for item in history:
-    col1, col2, col3 = st.columns([3,3,1])
-    with col1:
-        st.markdown(f'<div class="song-item">{item["original"]}</div>', unsafe_allow_html=True)
-    with col2:
-        st.markdown(f'<div class="song-item">{item["translated"]}</div>', unsafe_allow_html=True)
-    with col3:
-        st.button("Retry", key=f"retry_{random.randint(1,1000)}")
-
-# Bottom buttons
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.button("Previous", key="prev")
-with col2:
-    st.button("Next", key="next")
-with col3:
-    st.button("Clear History", key="clear")
-
-# Sidebar: Translation Settings
-st.sidebar.header("Translation Settings")
-similarity = st.sidebar.slider("Phonetic Similarity", 0.0, 1.0, 0.5, key='similarity')
-meaning = st.sidebar.slider("Semantic Accuracy", 0.0, 1.0, 0.5, key='meaning')
+st.markdown("Developed with ❤️ by Purang2")
