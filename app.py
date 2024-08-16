@@ -42,7 +42,7 @@ def translate_lyrics(lyrics, similarity_weight, meaning_weight):
     return response.text
 
 # Streamlit UI code
-st.set_page_config(page_title="J-POP-CrossFade", layout="wide")
+st.set_page_config(page_title="J-POP-CrossFade", layout="wide",page_icon=favicon)
 
 # CSS styles
 st.markdown("""
