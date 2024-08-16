@@ -24,7 +24,7 @@ def translate_lyrics(lyrics, similarity_weight, meaning_weight):
     Task: Transform J-Pop lyrics into K-Pop style, balancing phonetic similarity ({similarity_weight}) and meaning preservation ({meaning_weight})
 
     Original J-Pop lyrics:
-    {j_pop_lyrics}
+    {lyrics}
 
     Instructions:
     1. Provide a direct Korean translation of the Japanese lyrics.
