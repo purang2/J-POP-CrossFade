@@ -36,6 +36,67 @@ J-POP と K-POP の歌詞を相互に翻訳・脚色する AI ベースのツー
 |------|------|
 | 일본어 | 한국어 |
 | 한국어 | 일본어 |
+
+```python
+from jpop_crossfade import translate_and_adapt_lyrics
+
+# 입력 가사 (Kenshi Yonezu - "Kick Back")
+input_lyrics = """
+そう無邪気なチャイムが鳴る
+なにもない日々の行進曲
+影を連れて行こう
+どこへ向かおうか
+響くキックバック
+"""
+
+print("노래 정보:")
+print("제목: Kick Back")
+print("가수: 요네즈 켄시 (米津玄師)")
+print("발매년도: 2022")
+print("비고: 애니메이션 'Chainsaw Man' 오프닝 테마")
+
+print("\n원본 가사:")
+print(input_lyrics)
+
+# 번역 및 음운 유사성을 고려한 의역 수행
+result = translate_and_adapt_lyrics(input_lyrics, source="ja", target="ko", phonetic_similarity=0.7)
+
+print("\n한국어 번역:")
+print(result['translation'])
+
+print("\n음운 유사성을 고려한 K-POP 스타일 의역:")
+print(result['adaptation'])
+
+# 출력 예시:
+# 노래 정보:
+# 제목: Kick Back
+# 가수: 요네즈 켄시 (米津玄師)
+# 발매년도: 2022
+# 비고: 애니메이션 'Chainsaw Man' 오프닝 테마
+#
+# 원본 가사:
+# そう無邪気なチャイムが鳴る
+# なにもない日々の行進曲
+# 影を連れて行こう
+# どこへ向かおうか
+# 響くキックバック
+#
+# 한국어 번역:
+# 그래 순진한 차임벨이 울린다
+# 아무것도 없는 나날의 행진곡
+# 그림자를 데리고 가자
+# 어디로 향할까
+# 울려 퍼지는 킥백
+#
+# 음운 유사성을 고려한 K-POP 스타일 의역:
+# 소박한 차임이 울려
+# 공허한 나날의 행진곡
+# 그림자 데려 가볼까
+# 어디로 갈까 우리
+# 킥백 소리 울려
+```
+
+
 ```python
 from jpop_crossfade import translate_and_adapt_lyrics
 
