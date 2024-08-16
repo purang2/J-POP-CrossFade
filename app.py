@@ -201,6 +201,15 @@ st.markdown("""
 st.markdown('<p class="title">J-POP-CrossFade</p>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">AI 기반 J-Pop to K-Pop 가사 번역기 및 평가기</p>', unsafe_allow_html=True)
 
+
+# 이미지 크기 조절
+image = Image.open("images/main_image.webp")
+new_width = 400  # 원하는 너비로 조정
+width_percent = (new_width / float(image.size[0]))
+new_height = int((float(image.size[1]) * float(width_percent)))
+resized_image = image.resize((new_width, new_height), Image.LANCZOS)
+st.image(resized_image, caption="생성형AI로 만든 이미지 ")
+
 jpop_examples = {
     "YOASOBI - 夜に駆ける (Yoru ni Kakeru)": """
     駆け抜けてく 未来へと
