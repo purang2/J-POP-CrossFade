@@ -36,12 +36,49 @@ J-POP と K-POP の歌詞を相互に翻訳・脚色する AI ベースのツー
 |------|------|
 | 일본어 | 한국어 |
 | 한국어 | 일본어 |
-
 ```python
-# 간단한 사용 예시
-input_lyrics = "愛してるよ"
-translated_lyrics = translate_and_adapt(input_lyrics, "ja", "ko")
-print(translated_lyrics)  # 출력: "사랑해요"
+from jpop_crossfade import translate_and_adapt_lyrics
+
+# 입력 가사 (YOASOBI - "夜に駆ける(Yoru ni Kakeru)")
+input_lyrics = """
+駆け抜けてく 未来へと
+僕らの足を止めるものなど何もない
+"""
+
+print("노래 정보:")
+print("제목: 夜に駆ける (밤을 달리다)")
+print("가수: YOASOBI")
+print("발매년도: 2019")
+
+print("\n원본 가사:")
+print(input_lyrics)
+
+# 번역 및 의역 수행
+result = translate_and_adapt_lyrics(input_lyrics, source="ja", target="ko")
+
+print("\n한국어 번역:")
+print(result['translation'])
+
+print("\nK-POP 스타일 의역:")
+print(result['adaptation'])
+
+# 출력 예시:
+# 노래 정보:
+# 제목: 夜に駆ける (밤을 달리다)
+# 가수: YOASOBI
+# 발매년도: 2019
+#
+# 원본 가사:
+# 駆け抜けてく 未来へと
+# 僕らの足を止めるものなど何もない
+#
+# 한국어 번역:
+# 달려나가네 미래를 향해
+# 우리의 발을 멈추게 할 것 따위 아무것도 없어
+#
+# K-POP 스타일 의역:
+# 달려가자 내일을 향해
+# 우리 앞길 가로막을 순 없어
 ```
 
 **J-POP-CrossFade**로 음악의 경계를 넘어 새로운 창작의 세계를 경험하세요! 🌟
