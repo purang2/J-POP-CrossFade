@@ -20,22 +20,33 @@ model = genai.GenerativeModel('gemini-1.5-pro-exp-0801')
 # Function to translate lyrics using Gemini
 def translate_lyrics(lyrics, similarity_weight, meaning_weight):
     prompt = f"""
-    Task: J-Pop to K-Pop lyrics translation and adaptation
-
+    Task: Translate and adapt J-Pop lyrics to K-Pop style
+    
     Original J-Pop lyrics:
     {lyrics}
-
+    
     Instructions:
-    1. Translate the given Japanese lyrics to Korean.
-    2. Adapt the translation to maintain a similar sound and rhythm to the original, with a weight of {similarity_weight}.
-    3. Ensure the meaning is preserved as much as possible, with a weight of {meaning_weight}.
-    4. The result should be suitable for singing in Korean.
-
-    Please provide:
-    1. Direct translation
-    2. Phonetically similar adaptation
-    3. Final version balancing sound and meaning
-    4. Brief explanation of your adaptation process
+    1. Provide a direct Korean translation of the Japanese lyrics.
+    2. Create a K-Pop style adaptation following these guidelines:
+       - Maintain a phonetic similarity to the original Japanese, weighted at {similarity_weight} (0-1 scale)
+       - Preserve the original meaning as much as possible, weighted at {meaning_weight} (0-1 scale)
+       - Ensure the adapted lyrics fit the original melody and are singable in Korean
+       - Capture the mood and emotion of the original song
+    3. For each line, provide:
+       a) The original Japanese
+       b) Direct Korean translation
+       c) K-Pop style adaptation
+    4. Explain your adaptation process, highlighting how you balanced sound similarity and meaning.
+    
+    Output format:
+    Original: [Japanese lyrics]
+    Direct Translation: [Korean direct translation]
+    K-Pop Adaptation: [Adapted Korean lyrics]
+    
+    Explanation: [Your explanation of the adaptation process]
+    
+    Remember: The goal is to create K-Pop lyrics that sound natural in Korean, maintain the essence of the original, and could be sung to the original melody.
+    
     """
 
     response = model.generate_content(prompt)
