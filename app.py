@@ -12,7 +12,7 @@ genai.configure(api_key=st.secrets["gemini"])
 favicon = Image.open('images/favicon.png')
 
 # Initialize Gemini model
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-1.5-pro-exp-0801')
 
 # Function to translate lyrics using Gemini
 def translate_lyrics(lyrics, similarity_weight, meaning_weight):
