@@ -20,32 +20,50 @@ model = genai.GenerativeModel('gemini-1.5-pro-exp-0801')
 # Function to translate lyrics using Gemini
 def translate_lyrics(lyrics, similarity_weight, meaning_weight):
     prompt = f"""
-    Task: Translate and adapt J-Pop lyrics to K-Pop style
     
+    Task: Transform J-Pop lyrics into K-Pop style, balancing phonetic similarity ({similarity_weight}) and meaning preservation ({meaning_weight})
+
     Original J-Pop lyrics:
-    {lyrics}
-    
+    {j_pop_lyrics}
+
     Instructions:
     1. Provide a direct Korean translation of the Japanese lyrics.
     2. Create a K-Pop style adaptation following these guidelines:
-       - Maintain a phonetic similarity to the original Japanese, weighted at {similarity_weight} (0-1 scale)
-       - Preserve the original meaning as much as possible, weighted at {meaning_weight} (0-1 scale)
-       - Ensure the adapted lyrics fit the original melody and are singable in Korean
-       - Capture the mood and emotion of the original song
+       - Maintain phonetic similarity to the original Japanese (weight: {similarity_weight})
+       - Preserve the original meaning (weight: {meaning_weight})
+       - Ensure the adapted lyrics fit the original melody and are singable
+       - Incorporate current K-Pop trends and popular expressions
+       - Consider the cultural context and make appropriate adjustments
     3. For each line, provide:
-       a) The original Japanese
+       a) Original Japanese (with romaji)
        b) Direct Korean translation
-       c) K-Pop style adaptation
-    4. Explain your adaptation process, highlighting how you balanced sound similarity and meaning.
-    
+       c) K-Pop style adaptation (with romaji)
+       d) Explanation of your adaptation choices
+    4. Consider these musical elements:
+       - Rhythm and stress patterns of the original
+       - Syllable count and placement
+       - Vowel sounds for high notes or sustained notes
+    5. Add creative reinterpretations where appropriate to suit the K-Pop market
+
     Output format:
-    Original: [Japanese lyrics]
-    Direct Translation: [Korean direct translation]
-    K-Pop Adaptation: [Adapted Korean lyrics]
-    
-    Explanation: [Your explanation of the adaptation process]
-    
-    Remember: The goal is to create K-Pop lyrics that sound natural in Korean, maintain the essence of the original, and could be sung to the original melody.
+    Line 1:
+    Original (JP): [Japanese] / [Romaji]
+    Direct Translation: [Korean translation]
+    K-Pop Adaptation: [Adapted Korean] / [Romaji]
+    Explanation: [Brief explanation of adaptation choices, cultural considerations, and musical elements]
+
+    [Repeat for each line]
+
+    Overall Adaptation Strategy:
+    [Explain your overall approach, including how you balanced sound and meaning, incorporated K-Pop trends, and made cultural adjustments]
+
+    K-Pop Market Considerations:
+    [Discuss how this adaptation might appeal to K-Pop fans and fit current trends]
+
+    Potential Challenges:
+    [Identify any particularly difficult lines or concepts to adapt, and how you addressed them]
+
+    Remember: The goal is to create K-Pop lyrics that sound natural in Korean, maintain the essence of the original, could be sung to the original melody, and appeal to the K-Pop market.
     
     """
 
