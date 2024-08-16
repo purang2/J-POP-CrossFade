@@ -141,7 +141,7 @@ def jpop_to_kpop_with_evaluation(j_pop_lyrics, similarity_weight, meaning_weight
     return final_result
 
 # Streamlit UI
-st.set_page_config(page_title="J-POP-CrossFade", layout="wide")
+st.set_page_config(page_title="J-POP-CrossFade", layout="wide", page_icon=favicon)
 
 # CSS 스타일
 st.markdown("""
