@@ -1,10 +1,14 @@
 # [🎵 J-POP-CrossFade🎤](https://j-pop-crossfade.streamlit.app/)
 
+
+![iPhone-12-(iOS-14)-j-pop-crossfade streamlit app](https://github.com/user-attachments/assets/cf51bb10-189c-4b39-8541-e1ef239838fa)
+
 ## AI 기반의 J-POP ↔️ K-POP 가사 번역 번안 및 각색 도구
 
 > LLM 프롬프팅 기법을 사용하여 언어적, 문화적 차이를 극복하면서도 음악의 본질을 보존합니다.
 
-![iPhone-13-PRO-j-pop-crossfade streamlit app](https://github.com/user-attachments/assets/69fbf777-4f05-48ba-a869-f2b449cb1cd9)
+
+
 
 ### 한국어:
 AI 기반의 J-POP <--> K-POP 가사 번역 및 각색 도구입니다. LLM 프롬프팅 기법을 사용하여 언어적, 문화적 차이를 극복하면서도 음악의 본질을 보존합니다. 가사의 의미와 운율을 고려한 창의적인 번안으로, 두 문화 간의 음악적 교류를 촉진합니다. 🎵🇯🇵➡️🇰🇷🎤
