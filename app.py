@@ -199,7 +199,7 @@ st.markdown("""
 
 # 제목과 부제목
 st.markdown('<p class="title">J-POP-CrossFade</p>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">AI 기반 J-Pop to K-Pop 가사 번역기 및 평가기</p>', unsafe_allow_html=True)
+st.markdown('<p class="subtitle">AI 기반 J-Pop to K-Pop 가사 번역 번안기 및 평가기</p>', unsafe_allow_html=True)
 
 
 # 이미지 크기 조절
