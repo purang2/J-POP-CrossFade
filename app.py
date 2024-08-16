@@ -14,7 +14,9 @@ genai.configure(api_key=st.secrets["gemini"])
 favicon = Image.open('images/favicon.png')
 
 # Initialize Gemini model
-model = genai.GenerativeModel('gemini-1.5-pro-exp-0801')
+#model = genai.GenerativeModel('gemini-1.5-pro-exp-0801')
+# Initialize Gemini model
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 import streamlit as st
 import google.generativeai as genai
