@@ -201,24 +201,6 @@ st.markdown("""
 st.markdown('<p class="title">J-POP-CrossFade</p>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">AI 기반 J-Pop to K-Pop 가사 번역기 및 평가기</p>', unsafe_allow_html=True)
 
-# 메인 영역
-col1, col2 = st.columns(2)
-
-with col1:
-    st.subheader("원본 J-Pop 가사")
-    j_pop_lyrics = st.text_area("일본어 가사를 입력하세요", height=200, key="input")
-
-with col2:
-    st.subheader("번역 설정")
-    similarity_weight = st.slider("음운적 유사성 가중치", 0.0, 1.0, 0.5, key='similarity')
-    meaning_weight = st.slider("의미 보존 가중치", 0.0, 1.0, 0.5, key='meaning')
-
-if st.button("번역, 각색 및 평가", key="translate"):
-    if j_pop_lyrics:
-        result = jpop_to_kpop_with_evaluation(j_pop_lyrics, similarity_weight, meaning_weight)
-        st.markdown(f'<div class="output-text">{result}</div>', unsafe_allow_html=True)
-    else:
-        st.warning("번역을 시작하기 전에 J-Pop 가사를 입력해주세요.")
 
 jpop_examples = {
     "YOASOBI - 夜に駆ける (Yoru ni Kakeru)": """
@@ -244,17 +226,35 @@ jpop_examples = {
     """
 }
 
-# Streamlit UI 부분에 예시 추가
-st.subheader("원본 J-Pop 가사")
-example_selection = st.selectbox(
-    "예시 가사 선택 (또는 직접 입력)",
-    ["직접 입력"] + list(jpop_examples.keys())
-)
 
-if example_selection == "직접 입력":
-    j_pop_lyrics = st.text_area("일본어 가사를 입력하세요", height=200, key="input")
-else:
-    j_pop_lyrics = st.text_area("일본어 가사를 입력하세요", value=jpop_examples[example_selection], height=200, key="input")
+# 메인 영역
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("원본 J-Pop 가사")
+    # 여기에 예시 선택 및 입력 필드 추가
+    example_selection = st.selectbox(
+        "예시 가사 선택 (또는 직접 입력)",
+        ["직접 입력"] + list(jpop_examples.keys())
+    )
+
+    if example_selection == "직접 입력":
+        j_pop_lyrics = st.text_area("일본어 가사를 입력하세요", height=200, key="input")
+    else:
+        j_pop_lyrics = st.text_area("일본어 가사를 입력하세요", value=jpop_examples[example_selection], height=200, key="input")
+
+with col2:
+    st.subheader("번역 설정")
+    similarity_weight = st.slider("음운적 유사성 가중치", 0.0, 1.0, 0.5, key='similarity')
+    meaning_weight = st.slider("의미 보존 가중치", 0.0, 1.0, 0.5, key='meaning')
+
+if st.button("번역, 각색 및 평가", key="translate"):
+    if j_pop_lyrics:
+        result = jpop_to_kpop_with_evaluation(j_pop_lyrics, similarity_weight, meaning_weight)
+        st.markdown(f'<div class="output-text">{result}</div>', unsafe_allow_html=True)
+    else:
+        st.warning("번역을 시작하기 전에 J-Pop 가사를 입력해주세요.")
+
 
 # 푸터
 st.markdown("---")
