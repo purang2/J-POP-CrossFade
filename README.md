@@ -1,3 +1,4 @@
 # [J-POP-CrossFade](https://j-pop-crossfade.streamlit.app/)
 ---
-AI 기반의 J-POP &lt;--> K-POP 가사 번역 및 각색 도구입니다. LLM 프롬프팅 기법을 사용하여 언어적, 문화적 차이를 극복하면서도 음악의 본질을 보존합니다. 🎵🇯🇵➡️🇰🇷🎤
+
+An AI-powered tool for translating and adapting lyrics between J-POP and K-POP. Using LLM prompting techniques, it bridges linguistic and cultural gaps while preserving the essence of the music. It fosters musical exchange between the two cultures through creative adaptations that consider both meaning and rhythm of the lyrics. 🎵🇯🇵➡️🇰🇷🎤
