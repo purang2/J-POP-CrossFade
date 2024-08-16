@@ -220,6 +220,42 @@ if st.button("번역, 각색 및 평가", key="translate"):
     else:
         st.warning("번역을 시작하기 전에 J-Pop 가사를 입력해주세요.")
 
+jpop_examples = {
+    "YOASOBI - 夜に駆ける (Yoru ni Kakeru)": """
+    駆け抜けてく 未来へと
+    僕らの足を止めるものなど何もない
+    強くなれる 理由を知った
+    僕を連れて進め
+    """,
+
+    "Official HIGE DANdism - Pretender": """
+    君とのラブストーリー
+    それは予想通り
+    いざ始まればひとり芝居だ
+    ずっとそばにいたって
+    結局ただの観客だ
+    """,
+
+    "米津玄師 (Kenshi Yonezu) - Lemon": """
+    夢ならばどれほどよかったでしょう
+    未だにあなたのことを夢にみる
+    忘れた物を取りに帰るように
+    古びた思い出の埃を払う
+    """
+}
+
+# Streamlit UI 부분에 예시 추가
+st.subheader("원본 J-Pop 가사")
+example_selection = st.selectbox(
+    "예시 가사 선택 (또는 직접 입력)",
+    ["직접 입력"] + list(jpop_examples.keys())
+)
+
+if example_selection == "직접 입력":
+    j_pop_lyrics = st.text_area("일본어 가사를 입력하세요", height=200, key="input")
+else:
+    j_pop_lyrics = st.text_area("일본어 가사를 입력하세요", value=jpop_examples[example_selection], height=200, key="input")
+
 # 푸터
 st.markdown("---")
 st.markdown("Developed with ❤️ by Purang2")
