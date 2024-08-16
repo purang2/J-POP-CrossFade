@@ -201,7 +201,6 @@ st.markdown("""
 st.markdown('<p class="title">J-POP-CrossFade</p>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">AI 기반 J-Pop to K-Pop 가사 번역기 및 평가기</p>', unsafe_allow_html=True)
 
-
 jpop_examples = {
     "YOASOBI - 夜に駆ける (Yoru ni Kakeru)": """
     駆け抜けてく 未来へと
@@ -223,6 +222,57 @@ jpop_examples = {
     未だにあなたのことを夢にみる
     忘れた物を取りに帰るように
     古びた思い出の埃を払う
+    """,
+
+    "あいみょん (Aimyon) - マリーゴールド (Marigold)": """
+    さよならを言えなかった
+    引き止めることもできなかった
+    もう二度と会えないってわかっていたのに
+    二人で見た映画のラストシーン
+    君は泣いていて 僕も泣いていた
+    """,
+
+    "LiSA - 紅蓮華 (Gurenge)": """
+    強くなれる理由を知った
+    僕を連れて進め
+    泥だらけの走馬灯に酔う
+    こわばる心超えて
+    来たる日を想う
+    """,
+
+    "King Gnu - 白日 (Hakujitsu)": """
+    まぶしい光を浴びて
+    君は少し眠そうだ
+    僕が見つめてたその横顔
+    永遠を感じてた
+    """,
+
+    "菅田将暉 (Suda Masaki) - 見たこともない景色 (Mita Koto mo nai Keshiki)": """
+    誰かの為に生きるのは
+    誰かの為に生きられる人だけ
+    僕はただ君を守りたいだけ
+    それ以上でもそれ以下でもない
+    """,
+
+    "back number - 高嶺の花子さん (Takane no Hanako-san)": """
+    ねぇ 今でも覚えてる?
+    あの日の事 君の事
+    たまに思い出しては
+    今も胸が痛くなるよ
+    """,
+
+    "優里 (Yuuri) - ドライフラワー (Dry Flower)": """
+    君の好きな歌を
+    歌っていたら涙が出てきた
+    思い出すなよって
+    頭の中で自分に言い聞かせた
+    """,
+
+    "Mrs. GREEN APPLE - インフェルノ (Inferno)": """
+    目を覚ませ 僕の中で眠る獣よ
+    目覚めし時 何も恐れず 突き進め
+    闇を抜けたその先に
+    光射す未来がある
     """
 }
 
